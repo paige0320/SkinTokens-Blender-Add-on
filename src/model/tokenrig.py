@@ -25,10 +25,18 @@ from ..tokenizer.parse import get_tokenizer
 try:
     from flash_attn_interface import flash_attn_func # type: ignore
 except Exception as e:
-    from flash_attn.flash_attn_interface import flash_attn_func as _flash_attn_func
-    def flash_attn_func(*args, **kwargs):
-        res = _flash_attn_func(*args, **kwargs)
-        return res, None
+    # No prebuilt flash-attn kernel for Ampere (sm_86) on Windows; fall back to
+    # PyTorch SDPA. q/k/v are (B, S, H, D); SDPA wants (B, H, S, D).
+    def flash_attn_func(q, k, v):
+        q = q.transpose(1, 2)
+        k = k.transpose(1, 2)
+        v = v.transpose(1, 2)
+        if q.shape[1] != k.shape[1]:
+            repeat = q.shape[1] // k.shape[1]
+            k = k.repeat_interleave(repeat, dim=1)
+            v = v.repeat_interleave(repeat, dim=1)
+        out = F.scaled_dot_product_attention(q, k, v)
+        return out.transpose(1, 2), None
 
 class VocabSwitchingLogitsProcessor(LogitsProcessor):
     def __init__(self, tokenizer: Tokenizer, switch_token_id, eos_token_id, tokens_per_skin, init):
@@ -106,7 +114,7 @@ class TokenRig(ModelSpec):
         llm_config.torch_dtype = torch.bfloat16
         llm_config.pre_norm = True
         self.llm_config = llm_config
-        self.transformer = AutoModelForCausalLM.from_config(config=llm_config, attn_implementation="flash_attention_2").to(torch.bfloat16)
+        self.transformer = AutoModelForCausalLM.from_config(config=llm_config, attn_implementation="sdpa").to(torch.bfloat16)
         
         self.output_proj = nn.Sequential(
             nn.Linear(self.mesh_encoder.width, self.hidden_size),

@@ -99,3 +99,6 @@ coverage.xml
 *.cover
 
 # Project-specific ignores
+# Personal local setup/debug log (contains internal network details) — keep local only
+專案上手筆記.md
+gradio.log

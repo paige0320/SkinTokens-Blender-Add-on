@@ -311,7 +311,7 @@ def run_gradio(
     hf_path,
 ):
     if not files:
-        return "Please upload at least one 3D model.", None
+        return "Please upload at least one 3D model.", None, None
 
     tmp_out = Path(tempfile.mkdtemp(prefix="tokenrig_"))
     filepaths = [Path(f.name) for f in files]
@@ -336,7 +336,9 @@ def run_gradio(
         hf_path,
     )
 
-    return f"Processed {len(outputs)} models.", [str(p) for p in outputs]
+    # Third value feeds the in-browser 3D preview (gr.Model3D shows one model).
+    preview = str(outputs[0]) if outputs else None
+    return f"Processed {len(outputs)} models.", [str(p) for p in outputs], preview
 
 
 def launch_gradio():
@@ -381,6 +383,7 @@ def launch_gradio():
         load_btn = gr.Button("Load Model")
         log = gr.Textbox(label="Status")
         output = gr.File(label="Generated GLB", interactive=False)
+        preview = gr.Model3D(label="Preview (rigged result)", interactive=False)
 
         load_btn.click(
             lambda ckpt, hf: load_model(ckpt, hf)[0],
@@ -403,7 +406,7 @@ def launch_gradio():
                 model_ckpt,
                 hf_path,
             ],
-            outputs=[log, output],
+            outputs=[log, output, preview],
         )
 
     demo.launch(server_port=1024)
