@@ -16,6 +16,11 @@
 
 SkinTokens is the successor to [UniRig](https://github.com/VAST-AI-Research/UniRig) (SIGGRAPH '25). While UniRig uses separate stages for skeleton prediction and skinning, SkinTokens unifies both into a single autoregressive sequence via learned discrete skin tokens, yielding **98%–133%** improvement in skinning accuracy and **17%–22%** improvement in bone prediction over state-of-the-art baselines.
 
+> [!NOTE]
+> **Which option fits you?**
+> - **Just want to try the model online, no install?** Use the official hosted demo — [Hugging Face Space](https://huggingface.co/spaces/VAST-AI/SkinTokens). It runs on their infrastructure; you don't need a GPU or your own machine.
+> - **Want to run it locally / on Windows (incl. NVIDIA Ampere like the RTX 30-series), customize it, batch-process, or keep your assets private?** That's what this fork adds — see **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)** for a one-shot installer and the flash-attn→SDPA fix that lets it run on Ampere GPUs. Running locally requires your own ≥14 GB GPU and keeps the server on your machine.
+
 ## 🔮 Overview
 
 TokenRig takes a **single 3D mesh** as input and autoregressively produces a fully rigged asset — a coherent skeleton hierarchy plus dense per-vertex skinning weights — in a single unified sequence. Method in three stages:
