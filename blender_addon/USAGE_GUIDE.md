@@ -40,8 +40,12 @@ alone cannot rig anything.
 
 ## 3. The whole flow (what you actually do)
 
-1. **Download / unzip the whole package** and set it up once
-   (`../WINDOWS_SETUP.md`): create `.venv`, then `python download.py --model`.
+1. **Download / unzip the whole package**, then set it up once by running
+   `setup_windows.ps1` (it creates the `.venv` and downloads the model — see
+   `../WINDOWS_SETUP.md` for details):
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\setup_windows.ps1
+   ```
 2. **Start the backend first.** Double-click `../run_addon_server.bat`
    (or `.venv\Scripts\python.exe addon_server.py`). Wait until you see:
    ```
@@ -101,7 +105,7 @@ alone cannot rig anything.
 ## 7. How to check the add-on version
 
 - **In the file**: `blender_addon/__init__.py` → `bl_info["version"]`
-  (currently **1.0.0**).
+  (currently **1.1.0**).
 - **In Blender**: Preferences → Add-ons → expand "SkinTokens Auto-Rig".
 
 ## 8. Security
@@ -123,6 +127,7 @@ alone cannot rig anything.
 | `500 ... invalid load key '<'` | Proxy hijacked an internal call | Already fixed in this fork |
 | `500 ConnectionReset (10054)` | bpy_server crashed (e.g. a bad model) and does not auto-restart | Close the backend window and re-run `run_addon_server.bat` |
 | Duplicate/broken backend | Two backends started | Close all backend windows, start exactly one |
+| Server window seems frozen / asks for Enter | Windows console QuickEdit Mode — you clicked inside the window | Press Esc/Enter to resume; the backend now disables QuickEdit on startup, so it won't recur |
 
 ## 10. Design rationale (FAQ)
 
@@ -158,3 +163,7 @@ skeleton from the mesh directly, so there is no manual alignment step.
 - **Auto-remove** the `Icosphere` marker and the `glTF_not_exported` collection
   after import.
 - **Single-backend guard** to prevent broken duplicate backends.
+- **Check Environment** button + live **server status** indicator (🟢/🔴),
+  backed by a new backend `/health` endpoint, with non-blocking background polling.
+- **Disabled Windows console QuickEdit Mode** so clicking the server window no
+  longer freezes the backend.
