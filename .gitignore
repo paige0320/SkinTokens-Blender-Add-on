@@ -106,6 +106,8 @@ gradio.log
 .addon_token
 # Personal Chinese guide (English USAGE_GUIDE.md is the one meant for sharing)
 操作說明_中文.md
+# Personal project-history record (contains the conversation/questions)
+專案歷程紀錄.md
 # Dev-only QA scripts for the Blender add-on (end users don't need them)
 test_addon_blender.py
 test_addon_multiobj.py
