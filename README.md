@@ -21,6 +21,19 @@ SkinTokens is the successor to [UniRig](https://github.com/VAST-AI-Research/UniR
 > - **Just want to try the model online, no install?** Use the official hosted demo — [Hugging Face Space](https://huggingface.co/spaces/VAST-AI/SkinTokens). It runs on their infrastructure; you don't need a GPU or your own machine.
 > - **Want to run it locally / on Windows (incl. NVIDIA Ampere like the RTX 30-series), customize it, batch-process, or keep your assets private?** That's what this fork adds — see **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)** for a one-shot installer and the flash-attn→SDPA fix that lets it run on Ampere GPUs. Running locally requires your own ≥14 GB GPU and keeps the server on your machine.
 
+## 🧩 Blender Add-on (this fork)
+
+This fork adds a **local Blender add-on** so you can auto-rig a mesh without leaving Blender: select a model, click one button, and get back a skeleton with skin weights. The model runs on **your own GPU** via a small local backend (binds to `127.0.0.1` only and is token-protected), so your assets never leave your machine.
+
+**Quick start**
+
+1. Set up the environment and download the model — see **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)**.
+2. Double-click `run_addon_server.bat` to start the local backend (wait for `... backend is ready`).
+3. In Blender, install `blender_addon.zip` (Edit → Preferences → Add-ons → Install from Disk) and enable **SkinTokens Auto-Rig**.
+4. Select a mesh → **SkinTokens** tab in the N-panel → **Rig Selected Mesh**.
+
+It auto-joins multi-object characters, cleans up the importer's leftover nodes, and works behind a corporate proxy. Full details — hardware requirements, supported Blender versions (**3.6–5.1**), troubleshooting, and design rationale — are in **[blender_addon/USAGE_GUIDE.md](blender_addon/USAGE_GUIDE.md)**.
+
 ## 🔮 Overview
 
 TokenRig takes a **single 3D mesh** as input and autoregressively produces a fully rigged asset — a coherent skeleton hierarchy plus dense per-vertex skinning weights — in a single unified sequence. Method in three stages:
