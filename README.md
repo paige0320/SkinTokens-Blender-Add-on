@@ -1,18 +1,12 @@
-<h1 align="center">SkinTokens: A Learned Compact Representation <br/> for Unified Autoregressive Rigging</h1>
+<h1 align="center">SkinTokens — Blender Auto-Rig</h1>
+
+<p align="center"><em>One-click skeleton + skin-weight rigging inside Blender — runs locally on your own NVIDIA GPU, so your assets never leave your machine.</em></p>
 
 <p align="center">
-<a href="https://arxiv.org/abs/2602.04805"><img src='https://img.shields.io/badge/arXiv-2602.04805-b31b1b.svg?logo=arxiv' alt='arXiv'></a>
-<a href="https://zjp-shadow.github.io/works/SkinTokens/"><img src='https://img.shields.io/badge/Project_Page-Website-green?logo=googlechrome&logoColor=white' alt='Project Page'></a>
-<a href="https://huggingface.co/VAST-AI/SkinTokens"><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-blue' alt='HuggingFace Model'></a>
-<a href="https://huggingface.co/spaces/VAST-AI/SkinTokens"><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Demo-yellow' alt='HuggingFace Demo'></a>
-<a href="https://www.tripo3d.ai"><img src='https://img.shields.io/badge/Tripo-3D_Studio-ff7a00' alt='Tripo'></a>
+  <img src="assets/skintokens-teaser.png" width="100%" alt="SkinTokens automated rigging in Blender"/>
 </p>
 
-<p align="center">
-  <img src="assets/skintokens-teaser.png" width="100%" alt="TokenRig teaser: automated rigging with SkinTokens"/>
-</p>
-
-> **This fork** turns SkinTokens into a one-click **Blender auto-rigging tool** that runs locally on your own GPU. Start here — the original research README is further down.
+> A fork of [VAST-AI-Research/SkinTokens](https://github.com/VAST-AI-Research/SkinTokens) that adds a local **Blender add-on**. New here? Start with the Quick Start below — the original research paper and links are in the **About SkinTokens** section further down.
 
 ## 🚀 Quick Start — Blender Auto-Rig (Windows)
 
@@ -38,7 +32,17 @@ Multi-object characters are auto-joined, and the glTF importer's leftover nodes 
 
 ---
 
-<sub>The rest of this README is the original SkinTokens research documentation.</sub>
+## 📄 About SkinTokens (original research)
+
+<p align="center">
+<a href="https://arxiv.org/abs/2602.04805"><img src='https://img.shields.io/badge/arXiv-2602.04805-b31b1b.svg?logo=arxiv' alt='arXiv'></a>
+<a href="https://zjp-shadow.github.io/works/SkinTokens/"><img src='https://img.shields.io/badge/Project_Page-Website-green?logo=googlechrome&logoColor=white' alt='Project Page'></a>
+<a href="https://huggingface.co/VAST-AI/SkinTokens"><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-blue' alt='HuggingFace Model'></a>
+<a href="https://huggingface.co/spaces/VAST-AI/SkinTokens"><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Demo-yellow' alt='HuggingFace Demo'></a>
+<a href="https://www.tripo3d.ai"><img src='https://img.shields.io/badge/Tripo-3D_Studio-ff7a00' alt='Tripo'></a>
+</p>
+
+> **SkinTokens: A Learned Compact Representation for Unified Autoregressive Rigging** — the original research this fork is built on.
 
 **SkinTokens** is a learned, compact, and discrete representation for skinning weights. Built on this representation, **TokenRig** is a unified autoregressive framework that models the entire rig, i.e., skeleton and skinning weights, as a single token sequence. Given an input 3D mesh, it generates a complete skeleton hierarchy and skin weights that can be directly imported into standard 3D pipelines for character animation and simulation.
 
